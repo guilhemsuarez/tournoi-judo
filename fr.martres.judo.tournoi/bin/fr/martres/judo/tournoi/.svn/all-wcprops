@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/TournoiJudo/!svn/ver/2/trunk/src/fr/martres/judo/tournoi
+END
+Application.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/TournoiJudo/!svn/ver/2/trunk/src/fr/martres/judo/tournoi/Application.java
+END
+ApplicationWorkbenchWindowAdvisor.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/TournoiJudo/!svn/ver/2/trunk/src/fr/martres/judo/tournoi/ApplicationWorkbenchWindowAdvisor.java
+END
+MessagePopupAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/TournoiJudo/!svn/ver/2/trunk/src/fr/martres/judo/tournoi/MessagePopupAction.java
+END
+ICommandIds.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/TournoiJudo/!svn/ver/2/trunk/src/fr/martres/judo/tournoi/ICommandIds.java
+END
+Perspective.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/TournoiJudo/!svn/ver/5/trunk/src/fr/martres/judo/tournoi/Perspective.java
+END
+OpenViewAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/TournoiJudo/!svn/ver/2/trunk/src/fr/martres/judo/tournoi/OpenViewAction.java
+END
+Activator.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/TournoiJudo/!svn/ver/2/trunk/src/fr/martres/judo/tournoi/Activator.java
+END
+ApplicationActionBarAdvisor.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/TournoiJudo/!svn/ver/2/trunk/src/fr/martres/judo/tournoi/ApplicationActionBarAdvisor.java
+END
+ApplicationWorkbenchAdvisor.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/TournoiJudo/!svn/ver/2/trunk/src/fr/martres/judo/tournoi/ApplicationWorkbenchAdvisor.java
+END

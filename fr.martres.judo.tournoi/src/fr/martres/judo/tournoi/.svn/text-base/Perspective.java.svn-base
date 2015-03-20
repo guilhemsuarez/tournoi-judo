@@ -1,0 +1,27 @@
+package fr.martres.judo.tournoi;
+
+import org.eclipse.ui.IPageLayout;
+import org.eclipse.ui.IPerspectiveFactory;
+
+import fr.martres.judo.tournoi.ui.judoka.NavigationView;
+import fr.martres.judo.tournoi.ui.judoka.OverviewView;
+
+public class Perspective implements IPerspectiveFactory {
+
+	/**
+	 * The ID of the perspective as specified in the extension.
+	 */
+	public static final String ID = "fr.martres.judo.tournoi.perspective";
+
+	public void createInitialLayout(IPageLayout layout) {
+		String editorArea = layout.getEditorArea();
+		layout.setEditorAreaVisible(true);
+		
+		layout.addView(NavigationView.ID, IPageLayout.LEFT, 0.25f, editorArea);
+		layout.addView(OverviewView.ID,  IPageLayout.BOTTOM, 0.60f, NavigationView.ID);
+		
+		layout.getViewLayout(NavigationView.ID).setCloseable(false);
+
+		layout.getViewLayout(OverviewView.ID).setCloseable(false);
+	}
+}

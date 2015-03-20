@@ -1,0 +1,83 @@
+package fr.martres.judo.tournoi.ui.judoka;
+
+import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.part.ViewPart;
+
+import fr.martres.judo.tournoi.ui.common.adapters.nodes.IOverviewContent;
+
+public class OverviewView extends ViewPart implements ISelectionListener{
+
+	public static final String ID = "fr.martres.judo.tournoi.ui.judoka.overviewview";
+
+	/**
+	 * The text control that's displaying the content of the overview
+	 */
+	private Text messageText;
+	private Text typeText;
+	private Text nomText;
+	
+	public void createPartControl(Composite parent) {
+		Composite top = new Composite(parent, SWT.NONE);
+		GridLayout layout = new GridLayout();
+		layout.marginHeight = 0;
+		layout.marginWidth = 0;
+		top.setLayout(layout);
+		// top banner
+		Composite banner = new Composite(top, SWT.NONE);
+		banner.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		layout = new GridLayout();
+		layout.marginHeight = 5;
+		layout.marginWidth = 10;
+		layout.numColumns = 2;
+		banner.setLayout(layout);
+		
+		// setup bold font
+		Font boldFont = JFaceResources.getFontRegistry().getBold(JFaceResources.DEFAULT_FONT);    
+		
+		Text l = new Text(banner, SWT.WRAP);
+		l.setText("Type :");
+		l.setFont(boldFont);
+		typeText = new Text(banner, SWT.WRAP);
+		typeText.setText("");
+		typeText.setLayoutData(new GridData(GridData.FILL_BOTH));
+		
+		l = new Text(banner, SWT.WRAP);
+		l.setText("Nom :");
+		l.setFont(boldFont);
+		nomText = new Text(banner, SWT.WRAP);
+		nomText.setText("");
+		nomText.setLayoutData(new GridData(GridData.FILL_BOTH));
+	    
+		// message contents
+		messageText = new Text(top, SWT.MULTI | SWT.WRAP);
+		messageText.setText("");
+		messageText.setLayoutData(new GridData(GridData.FILL_BOTH));
+		
+		getViewSite().getPage().addSelectionListener(this);
+	}
+
+	public void setFocus() {
+		messageText.setFocus();
+	}
+	
+	public void selectionChanged(IWorkbenchPart part, ISelection selection){
+		if (selection instanceof IStructuredSelection){
+			Object first = ((IStructuredSelection) selection).getFirstElement();
+			if (first instanceof IOverviewContent){
+				typeText.setText(((IOverviewContent) first).getType());
+				nomText.setText(((IOverviewContent) first).getNom());
+				messageText.setText(((IOverviewContent) first).getDetails());
+			}
+		}
+	}
+}

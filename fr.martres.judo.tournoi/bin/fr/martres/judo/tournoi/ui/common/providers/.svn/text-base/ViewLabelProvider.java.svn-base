@@ -1,0 +1,27 @@
+package fr.martres.judo.tournoi.ui.common.providers;
+
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
+
+import fr.martres.judo.tournoi.ui.common.nodes.TreeObject;
+import fr.martres.judo.tournoi.ui.common.nodes.TreeParent;
+
+public class ViewLabelProvider extends LabelProvider {
+
+	public String getText(Object obj) {
+		String label =  obj.toString();
+		
+		if (obj instanceof TreeObject){
+			label = ((TreeObject) obj).getLabel();
+		}
+		return label;
+	}
+	public Image getImage(Object obj) {
+		String imageKey = ISharedImages.IMG_OBJ_ELEMENT;
+		if (obj instanceof TreeParent)
+		   imageKey = ISharedImages.IMG_OBJ_FOLDER;
+		return PlatformUI.getWorkbench().getSharedImages().getImage(imageKey);
+	}
+}

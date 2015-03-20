@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="splashExtension" name="Splash Extensions" schema="schema/splashExtension.exsd"/>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="fr.martres.judo.tournoi.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="fr.martres.judo.tournoi.Perspective"
+            icon="icons/perspective_32.png"
+            id="fr.martres.judo.tournoi.perspective"
+            name="Tournoi Judo Perspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            class="fr.martres.judo.tournoi.ui.judoka.OverviewView"
+            icon="icons/detail_32.png"
+            id="fr.martres.judo.tournoi.ui.judoka.overviewview"
+            name="Détails">
+      </view>
+      <view
+            name="Liste des judokas"
+            allowMultiple="false"
+            icon="icons/arbre_32.png"
+            class="fr.martres.judo.tournoi.ui.judoka.NavigationView"
+            id="fr.martres.judo.tournoi.ui.judoka.navigationview">
+      </view>
+      <view
+            allowMultiple="false"
+            class="fr.martres.judo.tournoi.ui.resultat.ResultatView"
+            icon="icons/classement_32.png"
+            id="fr.martres.judo.tournoi.ui.resultat.ResultatView"
+            name="Liste des Clubs"
+            restorable="true">
+      </view>
+      <view
+            allowMultiple="false"
+            class="org.eclipse.ui.views.navigator.ResourceNavigator"
+            icon="icons/Navigator_48.png"
+            id="fr.martres.tournoi.judo.ui.judoka.Navigator"
+            name="Navigateur de Fichier">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            description="Création d&apos;un session de combat"
+            id="fr.martres.judo.tournoi.ui.judoka.action.CreateSessionCombatAction"
+            name="Création Session Combat">
+      </command>
+      <command
+            description="Rafraichit la vue de navigation"
+            id="fr.martres.judo.tournoi.ui.judoka.action.RefreshNavigationViewAction"
+            name="Rafraichit la vue de navigation">
+      </command>
+      <command
+            description="Sauvegarde la configuration actuelle"
+            id="fr.martres.judo.tournoi.ui.judoka.action.SaveAction"
+            name="Sauvegarde la configuration actuelle">
+      </command>
+      <command
+            description="Ajoute la poule à la Session de Combat"
+            id="fr.martres.judo.tournoi.ui.sessionCombat.action.AjouterPouleSessionCombatAction"
+            name="Ajoute la poule à la Session de Combat">
+      </command>
+      <command
+            description="Edite la session de combat"
+            id="fr.martres.judo.tournoi.ui.sessionCombat.action.EditSessionCombatAction"
+            name="Edite la session de combat">
+      </command>
+      <command
+            description="Génère le rapport d&apos;une session"
+            id="fr.martres.judo.tournoi.ui.sessionCombat.action.GenerateRapportSessionCombatAction"
+            name="Génère le rapport d&apos;une session ">
+      </command>
+      <command
+            description="Supprime une poule d&apos;une session."
+            id="fr.martres.judo.tournoi.ui.sessionCombat.action.DeletePouleSessionCombatAction"
+            name="Supprime une poule d&apos;une session.">
+      </command>
+      <command
+            description="Saisir un résultat"
+            id="fr.martres.judo.tournoi.ui.resultat.action.SaisieResultatAction"
+            name="Saisir un résultat">
+      </command>
+      <command
+            description="Supprime un judoka d&apos;une poule."
+            id="fr.martres.judo.tournoi.ui.sessionCombat.action.DeleteJudokaPouleAction"
+            name="Supprime un judoka d&apos;une poule.">
+      </command>
+      <command
+            description="Création d&apos;un judoka"
+            id="fr.martres.judo.tournoi.ui.judoka.action.CreateJudokaAction"
+            name="Création d&apos;un judoka">
+      </command>
+      <command
+            description="Génère un rapport"
+            id="fr.martres.judo.tournoi.ui.resultat.action.GenerateRapportAction"
+            name="Génère un rapport">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="fr.martres.judo.tournoi.application"
+            name="Tournoi Judo">
+         <property
+               name="aboutText"
+               value="Logiciel de gestion de tournoi de Judo créé par Guilhem Suarez">
+         </property>
+         <property
+               name="aboutImage"
+               value="product_lg.png">
+         </property>
+         <property
+               name="appName"
+               value="Tournoi Judo">
+         </property>
+         <property
+               name="windowImages"
+               value="icons/session_32.png">
+         </property>
+      </product>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu">
+      </menuContribution>
+         
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="fr.martres.judo.tournoi.ui.sessionCombat.editors.SimpleSessionCombatEditor"
+            contributorClass="fr.martres.judo.tournoi.ui.sessionCombat.editors.SessionCombatEditorContributor"
+            icon="icons/session_32.png"
+            id="fr.martres.judo.tournoi.ui.sessionCombat.editors.SimpleSessionCombatEditor"
+            name="Session Combat Editor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.splashHandlers">
+      <splashHandler
+            class="fr.martres.judo.tournoi.splashHandlers.ExtensibleSplashHandler"
+            id="fr.martres.judo.tournoi.splashHandlers.extensible">
+      </splashHandler>
+      <splashHandlerProductBinding
+            productId="fr.martres.judo.tournoi.product"
+            splashId="fr.martres.judo.tournoi.splashHandlers.extensible">
+      </splashHandlerProductBinding>
+   </extension>
+   <extension
+         point="fr.martres.judo.tournoi.splashExtension">
+   </extension>
+   <extension
+         id="product1"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="fr.martres.judo.tournoi.application"
+            name="Tournoi Judo">
+         <property
+               name="aboutText"
+               value="Logiciel de gestion de tournoi de Judo créé par Guilhem Suarez">
+         </property>
+         <property
+               name="aboutImage"
+               value="product_lg.png">
+         </property>
+         <property
+               name="appName"
+               value="Tournoi Judo">
+         </property>
+      </product>
+   </extension>
+   <extension
+         point="org.eclipse.ui.navigator.viewer">
+      <viewerActionBinding
+            viewerId="fr.martres.tournoi.judo.ui.judoka.Navigator">
+         <includes>
+            <actionExtension
+                  pattern="org.eclipse.ui.navigator.resources.*">
+            </actionExtension>
+         </includes>
+      </viewerActionBinding>
+      <viewerContentBinding
+            viewerId="fr.martres.tournoi.judo.ui.judoka.Navigator">
+         <includes>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resourceContent">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resources.filters.*">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resources.linkHelper">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resources.workingSets">
+            </contentExtension>
+         </includes>
+      </viewerContentBinding>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.ui.resourcePerspective">
+         <view
+               id="fr.martres.tournoi.judo.ui.judoka.Navigator"
+               ratio="0.5"
+               relationship="stack"
+               relative="org.eclipse.ui.navigator.ProjectExplorer">
+         </view>
+      </perspectiveExtension>
+   </extension>
+
+</plugin>

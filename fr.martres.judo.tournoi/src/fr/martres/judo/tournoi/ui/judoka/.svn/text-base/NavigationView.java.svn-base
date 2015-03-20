@@ -1,0 +1,49 @@
+package fr.martres.judo.tournoi.ui.judoka;
+
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.part.ViewPart;
+
+import fr.martres.judo.tournoi.core.bo.Configuration;
+import fr.martres.judo.tournoi.services.ConfigurationService;
+import fr.martres.judo.tournoi.ui.common.UiException;
+import fr.martres.judo.tournoi.ui.common.providers.ViewContentProvider;
+import fr.martres.judo.tournoi.ui.common.providers.ViewLabelProvider;
+import fr.martres.judo.tournoi.ui.judoka.adapter.factories.ConfigurationFactory;
+
+public class NavigationView extends ViewPart {
+	public static final String ID = "fr.martres.judo.tournoi.ui.judoka.navigationview";
+	private TreeViewer viewer;
+
+	/**
+	 * This is a callback that will allow us to create the viewer and initialize
+	 * it.
+	 */
+	public void createPartControl(Composite parent) {
+		viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL
+				| SWT.BORDER);
+		viewer.setContentProvider(new ViewContentProvider());
+		viewer.setLabelProvider(new ViewLabelProvider());
+		
+		// informe de la selection
+		getSite().setSelectionProvider(viewer);
+		// call configuration service
+		Configuration configuration = ConfigurationService.getInstance()
+				.getConfiguration();
+		try {
+			viewer.setInput(ConfigurationFactory.getInstance()
+					.getConfigurationNode(configuration));
+		} catch (UiException e) {
+			System.err.println("Error when displaying tree.");
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Passing the focus request to the viewer's control.
+	 */
+	public void setFocus() {
+		viewer.getControl().setFocus();
+	}
+}
