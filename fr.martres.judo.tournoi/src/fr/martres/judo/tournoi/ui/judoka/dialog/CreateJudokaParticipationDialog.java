@@ -229,7 +229,7 @@ public class CreateJudokaParticipationDialog extends TitleAreaDialog {
 		gd.grabExcessHorizontalSpace = true;
 		nom.setLayoutData(gd);
 
-		// le nom du judoka
+		// le prenom du judoka
 		Label labelPrenom = new Label(composite, SWT.NONE);
 		labelPrenom.setText("Prenom");
 		labelGD = new GridData();
@@ -241,28 +241,6 @@ public class CreateJudokaParticipationDialog extends TitleAreaDialog {
 		gd.grabExcessVerticalSpace = true;
 		gd.grabExcessHorizontalSpace = true;
 		prenom.setLayoutData(gd);
-
-		// La date de naissance
-		Label labelDate = new Label(composite, SWT.NONE);
-		labelDate.setText("Date de naissance");
-		labelGD = new GridData();
-		labelGD.verticalAlignment = GridData.BEGINNING;
-		labelDate.setLayoutData(labelGD);
-
-		date = new CDateTime(composite, CDT.BORDER | CDT.DROP_DOWN);
-		date.setPattern("dd/MM/yyyy");
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.grabExcessVerticalSpace = true;
-		gd.grabExcessHorizontalSpace = true;
-		date.setLayoutData(gd);
-
-		// Le club
-		Label clubLabel = new Label(composite, SWT.NONE);
-		clubLabel.setText("Club");
-		labelGD = new GridData();
-		labelGD.verticalAlignment = GridData.BEGINNING;
-		clubLabel.setLayoutData(labelGD);
-		createAndFillClubCombo(composite);
 
 		// Homme ou femme
 		Label sexeLabel = new Label(composite, SWT.NONE);
@@ -280,6 +258,25 @@ public class CreateJudokaParticipationDialog extends TitleAreaDialog {
 		femme = new Button(compositeRadio, SWT.RADIO);
 		femme.setText("Femme");
 
+		// La date de naissance
+		Label labelDate = new Label(composite, SWT.NONE);
+		labelDate.setText("Date de naissance");
+		labelGD = new GridData();
+		labelGD.verticalAlignment = GridData.BEGINNING;
+		labelDate.setLayoutData(labelGD);
+
+		date = new CDateTime(composite, CDT.BORDER | CDT.DROP_DOWN);
+		date.setPattern("yyyy");
+		gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.grabExcessVerticalSpace = true;
+		gd.grabExcessHorizontalSpace = true;
+		date.setLayoutData(gd);
+
+		// Le poids
+		Label labelPoids = new Label(composite, SWT.NONE);
+		labelPoids.setText("Poids");
+		initialisePoids(composite);
+
 		// Le grade
 		Label gradeLabel = new Label(composite, SWT.NONE);
 		gradeLabel.setText("Ceinture");
@@ -288,11 +285,14 @@ public class CreateJudokaParticipationDialog extends TitleAreaDialog {
 		gradeLabel.setLayoutData(labelGD);
 		createAndFillGradeCombo(composite);
 
-		// Le poids
-		Label labelPoids = new Label(composite, SWT.NONE);
-		labelPoids.setText("Poids");
+		// Le club
+		Label clubLabel = new Label(composite, SWT.NONE);
+		clubLabel.setText("Club");
+		labelGD = new GridData();
+		labelGD.verticalAlignment = GridData.BEGINNING;
+		clubLabel.setLayoutData(labelGD);
+		createAndFillClubCombo(composite);
 
-		initialisePoids(composite);
 
 		return composite;
 	}
