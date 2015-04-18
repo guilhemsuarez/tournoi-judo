@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import fr.martres.judo.tournoi.core.configuration.bo.Categorie;
 import fr.martres.judo.tournoi.core.configuration.bo.Competition;
+import fr.martres.judo.tournoi.core.configuration.bo.CompetitionHelper;
 import fr.martres.judo.tournoi.core.configuration.bo.Configuration;
 import fr.martres.judo.tournoi.core.configuration.bo.Poids;
 import fr.martres.judo.tournoi.core.configuration.bo.PoidsHelper;
@@ -156,7 +157,7 @@ public class CreateSessionCombatDialog extends TitleAreaDialog {
 			int index = 0;
 			for (Competition competition : configuration.getCompetitions()) {
 
-				competitionCombo.add(competition.getName(), index);
+				competitionCombo.add(CompetitionHelper.getLabel(competition), index);
 				this.competitions.put(index, competition);
 				// selection si celui fourni
 				if (competition.equals(this.competitionSelectionne)) {

@@ -1,11 +1,15 @@
 package fr.martres.judo.tournoi.core.configuration.bo;
 
+import java.text.SimpleDateFormat;
+
 
 public class CompetitionHelper {
 
 
 	public static final String getLabel(Competition competition) {
-		String label = competition.getVille() + " - "+competition.getName();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String date = format.format(competition.getDate());
+		String label = date + " - " + competition.getVille() + " - "+competition.getName();
 		
 		return label;
 	}

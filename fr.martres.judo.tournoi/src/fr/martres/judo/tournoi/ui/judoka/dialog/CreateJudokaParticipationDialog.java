@@ -1,11 +1,14 @@
 package fr.martres.judo.tournoi.ui.judoka.dialog;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -13,13 +16,14 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.nebula.widgets.cdatetime.CDT;
-import org.eclipse.nebula.widgets.cdatetime.CDateTime;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -80,7 +84,7 @@ public class CreateJudokaParticipationDialog extends TitleAreaDialog {
 	private Text prenom;
 	private CCombo clubCombo;
 	private CCombo gradeCombo;
-	private CDateTime date;
+	private Text date;
 	private Button homme;
 	private Button femme;
 	private Button recherche;
@@ -130,7 +134,10 @@ public class CreateJudokaParticipationDialog extends TitleAreaDialog {
 						// les renseignements du judoka
 						nom.setText(judoka.getNom());
 						prenom.setText(judoka.getPrenom());
-						date.setSelection(judoka.getDateNaissance());
+						//réccupération de l'année dns la date
+						SimpleDateFormat format = new SimpleDateFormat("yyyy",Locale.FRENCH);
+						String annee = format.format(judoka.getDateNaissance());
+						date.setText(annee);
 						homme.setSelection(judoka.isHomme());
 						femme.setSelection(!judoka.isHomme());
 						// les renseignements de la participation : la dernière
@@ -224,6 +231,11 @@ public class CreateJudokaParticipationDialog extends TitleAreaDialog {
 		labelGD.verticalAlignment = GridData.CENTER;
 		labelNom.setLayoutData(labelGD);
 		nom = new Text(composite, SWT.BORDER | SWT.SINGLE);
+		nom.addVerifyListener(new VerifyListener() {
+			public void verifyText(VerifyEvent e){
+				e.text = e.text.toUpperCase();
+			}
+		});
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.grabExcessVerticalSpace = true;
 		gd.grabExcessHorizontalSpace = true;
@@ -237,6 +249,11 @@ public class CreateJudokaParticipationDialog extends TitleAreaDialog {
 		labelPrenom.setLayoutData(labelGD);
 
 		prenom = new Text(composite, SWT.BORDER | SWT.SINGLE);
+		prenom.addVerifyListener(new VerifyListener() {
+			public void verifyText(VerifyEvent e){
+				e.text = e.text.toUpperCase();
+			}
+		});		
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.grabExcessVerticalSpace = true;
 		gd.grabExcessHorizontalSpace = true;
@@ -260,18 +277,12 @@ public class CreateJudokaParticipationDialog extends TitleAreaDialog {
 
 		// La date de naissance
 		Label labelDate = new Label(composite, SWT.NONE);
-		labelDate.setText("Date de naissance");
+		labelDate.setText("Annee de naissance");
 		labelGD = new GridData();
 		labelGD.verticalAlignment = GridData.BEGINNING;
 		labelDate.setLayoutData(labelGD);
-
-		date = new CDateTime(composite, CDT.BORDER | CDT.DROP_DOWN);
-		date.setPattern("yyyy");
-		gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.grabExcessVerticalSpace = true;
-		gd.grabExcessHorizontalSpace = true;
-		date.setLayoutData(gd);
-
+		initialiseDate(composite);
+		
 		// Le poids
 		Label labelPoids = new Label(composite, SWT.NONE);
 		labelPoids.setText("Poids");
@@ -295,6 +306,42 @@ public class CreateJudokaParticipationDialog extends TitleAreaDialog {
 
 
 		return composite;
+	}
+
+	/**
+	 * @param composite
+	 * 
+	 */
+	private void initialiseDate(Composite composite) {
+		
+		date =  new Text(composite, SWT.BORDER | SWT.SINGLE);
+		date.setText("");
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.grabExcessVerticalSpace = true;
+		gd.grabExcessHorizontalSpace = true;
+		date.setLayoutData(gd);
+		
+		date.addKeyListener(new KeyListener() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+
+				if (!date.getText().isEmpty()) {
+					// on vérifie que ce soit des entier
+					try {
+						Integer.parseInt(date.getText());
+					} catch (NumberFormatException e1) {
+						// on supprime juste la valeur²
+						date.setText("");
+					}
+
+				}
+			}
+		});
 	}
 
 	/**
@@ -440,6 +487,11 @@ public class CreateJudokaParticipationDialog extends TitleAreaDialog {
 				public void keyReleased(KeyEvent e) {
 					newClub = clubCombo.getText();
 				}});
+			clubCombo.addVerifyListener(new VerifyListener() {
+				public void verifyText(VerifyEvent e){
+					e.text = e.text.toUpperCase();
+				}
+			});	
 
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
@@ -610,9 +662,16 @@ public class CreateJudokaParticipationDialog extends TitleAreaDialog {
 			ok = false;
 			errorMessage.append("Le prenom du judoka doit être fournis.\n");
 		}
-		if ( date.getSelection() == null){
+		if ( date.getText().isEmpty()){
 			ok = false;
 			errorMessage.append("La date du judoka doit être fournis.\n");	
+		}
+		else {
+			int intDate = Integer.parseInt(date.getText());
+			if (intDate < 1900 || intDate > 2100 ){
+				ok = false;
+				errorMessage.append("La date du judoka doit être valide.\n");
+			}
 		}
 		if (clubSelectionne == null && isNewClub() == false){
 			ok = false;
@@ -635,7 +694,13 @@ public class CreateJudokaParticipationDialog extends TitleAreaDialog {
 			// on sauvegarde les valeurs
 			nomSelectionne = nom.getText();
 			prenomSelectionne = prenom.getText();
-			dateSelectionne = date.getSelection();
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			try {
+				dateSelectionne = format.parse("01/01/"+date.getText());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			poidsSelectionne = Double.parseDouble(poids.getText());
 			isHomme = homme.getSelection();
 			super.okPressed();
